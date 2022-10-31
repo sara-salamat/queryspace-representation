@@ -1,0 +1,1 @@
+In order to train a bi-encoder on original ms-marco data you need to download the collection, train and dev queries for passage ranking from [here](https://microsoft.github.io/msmarco/) and put it in this folder.
