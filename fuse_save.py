@@ -1,9 +1,16 @@
 import pandas as pd
+import argparse
 from trectools import TrecEval, TrecQrel, TrecRun, fusion
 
-## build trec format and save
-qrels = TrecQrel('qrels.dev.small.tsv')
 
+
+parser = argparse.ArgumentParser()
+qrels_path = parser.add_argument('--qrels',required=True)
+run1_path = parser.add_argument('--run1',required=True)
+run2_path = parser.add_argument('--run2',required=True)
+
+## build trec format and save
+qrels = TrecQrel(qrels_path)
 
 def build_trec_run(run_file, trec_dataframe):
     trec_dataframe['qid'] = run_file[0]
@@ -17,9 +24,9 @@ def build_trec_run(run_file, trec_dataframe):
 
 
 ## fuse with original
-original = TrecRun('run_original_trec')
-fuse_with = TrecRun('run_only30q_trec') ## change
+original = TrecRun(run1_path)
+fuse_with = TrecRun(run2_path) ## change
 
 fused_run = fusion.reciprocal_rank_fusion([original,fuse_with]) 
-fused_run.print_subset('q30_original', topics=fused_run.topics()) ## change
+fused_run.print_subset('fused_run', topics=fused_run.topics())
 

@@ -1,19 +1,26 @@
 import faiss,os
 import torch
 from sentence_transformers import SentenceTransformer, CrossEncoder, util
+import argparse
 
-index= faiss.read_index('Only_5q/Only_5q_lm_faiss')
+
+parser = argparse.ArgumentParser()
+model_path = parser.add_argument('--model_path',required=True)
+collection_folder = parser.add_argument('--collection_path',required=True)
+collection_name = parser.add_argument('--collection_filename',required=True)
+
+index= faiss.read_index(collection_folder+'/'+ collection_name+ 'faiss')
 print('done')
-data_folder='Only_5q'
+data_folder = collection_folder
 top_k = 1000
-model = SentenceTransformer('output-s/Q2Q_5q_train_bi-encoder-mnrl-sentence-transformers-all-MiniLM-L6-v2-margin_3.0-2022-10-21_20-26-43')
+model = SentenceTransformer('output/' + model_path)
 print('model loaded')
 
 model.max_seq_length=350
 queries_filepath = os.path.join(data_folder, 'queries.dev.small.tsv')
 
 c=0
-out=open('run/out_5q_lm_1000_w_score','w')
+out=open('run_file','w')
 qids=[]
 queries=[]
 with open(queries_filepath, 'r', encoding='utf8') as fIn:

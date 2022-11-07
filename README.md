@@ -12,6 +12,21 @@ To train a bi-encoder on query-to-query (q2q) approach you first need to downloa
 ```
 python train_bi_q2q.py
 ```
+## Encode 
+After training models, both corpus and queries need to be encoded and indexed:
+```
+python Encode.py --model_path model/save/path --collection_path path/to/data/folder --collection_name name/of/the/collection 
+```
+## Retrieve
+In order to retrieve documents and save run files, use the following command:
+```
+python retrieve1000.py --model_path model/save/path --collection_path path/to/data/folder --collection_name name/of/the/collection
+```
+## fuse run files
+To fuse two run files, use the following command:
+```
+python fuse_save.py --qrels path/to/msmarco/dev/qrels --run1 path/to/first/runfile --run2 path/to/second/runfile
+```
 
 ## Results
 the following tables show the results of our approach. Our method has improves the performnce on MS MARCO dev set and chameleons.
