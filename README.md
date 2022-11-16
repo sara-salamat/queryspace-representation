@@ -13,12 +13,16 @@ To train a bi-encoder on query-to-query (q2q) approach you first need to downloa
 python train_bi_q2q.py
 ```
 ## Encode 
-After training models, both corpus and queries need to be encoded and indexed:
+After training models, both corpus and queries need to be encoded and indexed. The corpus should be the ones that the model was trained on (either original MS Marco corpus or generated queries). The following command encodes the corpus (MS Marco) and saves in the folder.
 ```
 python Encode.py --model_path model/save/path --collection_path path/to/data/folder --collection_name name/of/the/collection 
 ```
+The encoded corpus should be indexed to be ready for the next steps. [Faiss](https://github.com/facebookresearch/faiss) is a library developed by Facebook for efiicient similarity search.
+```
+python faiss.py --collection_path path/to/collection/folder
+```
 ## Retrieve
-In order to retrieve documents and save run files, use the following command:
+In order to retrieve documents and save run file, use the following command:
 ```
 python retrieve1000.py --model_path model/save/path --collection_path path/to/data/folder --collection_name name/of/the/collection
 ```
